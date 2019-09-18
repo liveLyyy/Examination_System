@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liyan.mapper.StudentMapper">
+    <resultMap id="BaseResultMap" type="com.liyan.pojo.Student">
+        <id column="userID" property="userid" jdbcType="INTEGER"/>
+        <result column="userName" property="username" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="birthYear" property="birthyear" jdbcType="DATE"/>
+        <result column="grade" property="grade" jdbcType="DATE"/>
+        <result column="collegeID" property="collegeid" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="countBy" parameterType="Student" resultType="int">
+        select count(*) from student
+  </select>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="Student">
+        select *
+        from student
+        <if test="userName != null">
+            where userName like concat('%',#{username},'%')
+        </if>
+    </select>
+
+</mapper>

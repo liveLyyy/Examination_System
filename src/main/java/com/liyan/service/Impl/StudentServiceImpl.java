@@ -1,0 +1,74 @@
+package com.liyan.service.Impl;
+
+import com.liyan.custom.StudentCustom;
+
+import com.liyan.mapper.CollegeMapper;
+import com.liyan.mapper.StudentMapper;
+import com.liyan.mapper.StudentMapperCustom;
+import com.liyan.pojo.College;
+import com.liyan.pojo.Student;
+import com.liyan.service.StudentService;
+import com.liyan.vo.PagingVO;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Student
+ */
+@Service
+public class StudentServiceImpl implements StudentService {
+
+    //使用spring 自动注入
+   // @Resource(description = "studentMapperCustom")
+    @Autowired
+    private StudentMapperCustom studentMapperCustom;
+
+    @Autowired
+    private StudentMapper studentMapper;
+
+    @Autowired
+    private CollegeMapper collegeMapper;
+
+
+    public List<StudentCustom> findByPaging(Integer toPageNo) throws Exception {
+        PagingVO pagingVO = new PagingVO();
+        pagingVO.setToPageNo(toPageNo);
+        List<StudentCustom> list = studentMapperCustom.findByPaging(pagingVO);
+        return list;
+    }
+
+    @Override
+    public int getCountStudent() throws Exception {
+        Student student=new Student();
+        return studentMapper.countBy(student);
+    }
+
+    @Override
+    public List<StudentCustom> findByName(String name) throws Exception {
+        Student student=new Student();
+        List<Student> list=studentMapper.selectByExample(student);
+        List<StudentCustom> studentCustomList = null;
+        if (list != null) {
+            studentCustomList = new ArrayList<StudentCustom>();
+            for (Student s : list) {
+                StudentCustom studentCustom = new StudentCustom();
+                //类拷贝
+                BeanUtils.copyProperties(s, studentCustom);
+                //获取课程名
+                College college = collegeMapper.selectByPrimaryKey(s.getCollegeid());
+                studentCustom.setcollegeName(college.getCollegename());
+
+                studentCustomList.add(studentCustom);
+            }
+        }
+
+        return studentCustomList;
+    }
+
+
+}
