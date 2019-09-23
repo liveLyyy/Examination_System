@@ -10,5 +10,9 @@ public interface StudentMapper {
 
    int countBy(Student student);
 
-   List<Student> selectByExample(Student student);
+   List<Student> selectByExample(String username);
+
+   Student selectByPrimaryKey(Integer userid);
+
+   int insert(Student student);
 }

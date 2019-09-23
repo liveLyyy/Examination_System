@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--加载数据库配置文件-->
+    <context:property-placeholder location="classpath:mysql.properties" />
+    <!--组件扫描，如果想要类被组件扫描，扫描到，并在Spring容器中注册的话
+    必须在类名上添加上注解 @Repository、@Service、@Controller、@Component （这四个注解功能一样，名字不同只是为了区分不同功能）
+    @Component 是通用组件
+    -->
+    <context:component-scan base-package="com.liyan.service.Impl"/>
+
+    <!--配置数据源 c3p0l连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" >
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="initialSize" value="1"/>
+        <property name="maxIdle" value="1"/>
+        <property name="maxActive" value="10"/>
+       <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="10000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="testWhileIdle" value="true" />
+        <!-- 这里配置提交方式，默认就是TRUE，可以不用配置 -->
+        <property name="defaultAutoCommit" value="true" />
+    </bean>
+
+
+    <!--配置SqlSessionFactory-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--加载mybatis配置文件-->
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--Mapper批量扫描，从Mapper包扫描接口，自动创建代理对象，并在Spring容器中自动注册
+    使用 Mybatis与Spring整合包的这个 Mapper 扫描器后， Mybatis 配置文件里的扫描器，就可以取消掉了
+    遵循的规范 不变
+    自动扫描出来的Mapper的bean的id为Mapper类名（首字母小写）
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--如果需要扫描多个报下的mapper,每个包中间使用半角逗号分开-->
+        <property name="basePackage" value="com.liyan.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory" />
+    </bean>
+    <!--事务控制器
+        对mybatis操作数据库事务控制，spring使用jdbc的事务控制类
+    -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--配置数据源
+        dataSource在applicationContext-dao.xml中配置了
+        -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager" >
+        <tx:attributes>
+            <!--传播行为-->
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="select*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--AOP-->
+    <aop:config>
+        <!--设置切入点-->
+        <aop:pointcut id="mypoint" expression="execution(* com.liyan.service.Impl.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="mypoint"/>
+    </aop:config>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!--组件扫描器-->
+    <context:component-scan base-package="com.liyan.realm" />
+
+    <!-- shiro过滤器bean，id要和web.xml中filter-name一致 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <!-- 要求登录时的链接(登录页面地址)，非必须的属性，默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->
+        <!--<property name="loginUrl" value="/admin/show"></property>-->
+        <property name="filterChainDefinitions">
+            <value>
+                #这里相当于ini配置文件中的[urls]
+                #url=拦截器[参数]，拦截器
+                # /techer/** = authc, perms[document:read]
+                # 如果用户没有该角色，然后访问该 路径 会报 401错误
+                /admin/** = authc, roles[admin]
+                /techer/** = authc, roles[teacher]
+                /student/** = authc, roles[student]
+                # 当访问login时，不用进行认证（anon表示匿名）
+                /login = anon
+                /logout = logout
+                # 配置静态资源可以匿名访问
+                /static/**=anon
+                /css/** = anon
+                /js/** = anon
+                /images/** = anon
+                /fonts/** = anon
+                # 除了上面额 /login 可以匿名访问，其他路径都需要登录访问
+                # 如果没登录，就访问其他路径会跳转到 /login 登录
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <!-- 配置securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--配置自定义Realm-->
+        <!--loginRealm 使用扫描器扫描注册成功了-->
+        <property name="realm" ref="loginRealm" />
+        <!-- <property name="sessionMode" value="native"/> -->
+    </bean>
+    <!-- 生命周期 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+    <!-- 启用shiro注解 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+</beans>

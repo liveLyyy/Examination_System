@@ -9,4 +9,6 @@ public interface CollegeMapper {
 
     College selectByPrimaryKey(Integer id);
 
+    List<College> selectByExample(College college);
+
 }

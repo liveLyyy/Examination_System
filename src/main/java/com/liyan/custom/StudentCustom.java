@@ -12,7 +12,6 @@ import java.util.List;
 public class StudentCustom extends Student {
     //所属院系名
     private String collegeName;
-
     //选课列表
     private List<SelectedCourseCustom> selectedCourseList;
 

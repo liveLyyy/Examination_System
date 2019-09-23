@@ -28,9 +28,7 @@ public class UserLoginController {
 
         if (subject.hasRole("admin")) {
             return "redirect:/admin/showStudent";
-        } else if (subject.hasRole("teacher")) {
-            return "redirect:/teacher/showCourse";
-        } else if (subject.hasRole("student")) {
+        }else if (subject.hasRole("student")) {
             return "redirect:/student/showCourse";
         }
         return "/login";

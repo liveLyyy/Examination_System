@@ -10,8 +10,14 @@ import org.springframework.stereotype.Service;
 public class UserloginServiceImpl implements UserloginService {
     @Autowired
     private UserloginMapper userloginMapper;
+
     @Override
     public Userlogin Login(String UserName) {
         return userloginMapper.findByNameAll(UserName);
+    }
+
+    @Override
+    public void save(Userlogin userlogin) throws Exception {
+        userloginMapper.insert(userlogin);
     }
 }

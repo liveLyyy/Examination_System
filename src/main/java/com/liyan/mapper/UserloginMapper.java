@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface UserloginMapper {
     //登录
    Userlogin findByNameAll(String UserName);
+
+   //新增
+   int insert(Userlogin userlogin);
 }

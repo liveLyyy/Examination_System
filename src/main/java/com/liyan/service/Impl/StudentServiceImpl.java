@@ -50,8 +50,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentCustom> findByName(String name) throws Exception {
-        Student student=new Student();
-        List<Student> list=studentMapper.selectByExample(student);
+        List<Student> list=studentMapper.selectByExample(name);
         List<StudentCustom> studentCustomList = null;
         if (list != null) {
             studentCustomList = new ArrayList<StudentCustom>();
@@ -62,12 +61,20 @@ public class StudentServiceImpl implements StudentService {
                 //获取课程名
                 College college = collegeMapper.selectByPrimaryKey(s.getCollegeid());
                 studentCustom.setcollegeName(college.getCollegename());
-
                 studentCustomList.add(studentCustom);
             }
         }
-
         return studentCustomList;
+    }
+
+    @Override
+    public Boolean save(Student student) throws Exception {
+        Student stu = studentMapper.selectByPrimaryKey(student.getUserid());
+        if (stu == null) {
+            studentMapper.insert(student);
+            return true;
+        }
+        return false;
     }
 
 

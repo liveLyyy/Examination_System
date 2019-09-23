@@ -1,6 +1,7 @@
 package com.liyan.service;
 
 import com.liyan.custom.StudentCustom;
+import com.liyan.pojo.Student;
 
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface StudentService {
     int getCountStudent() throws Exception;
     //根据名字模糊查询
     List<StudentCustom> findByName(String name) throws Exception;
+    //保存学生信息
+    Boolean save(Student student) throws Exception;
 }
