@@ -7,44 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0faa80d3-ff40-4170-94eb-a5be30a56efb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/liyan/service/CollegeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/liyan/service/Impl/CollegeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/controller/UserLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/controller/UserLoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/custom/StudentCustom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/custom/StudentCustom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/CollegeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/CollegeMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/CollegeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/CollegeMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/StudentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/StudentMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/StudentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/StudentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/UserloginMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/UserloginMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/UserloginMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/mapper/UserloginMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/service/Impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/service/Impl/StudentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/service/Impl/UserloginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/service/Impl/UserloginServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/service/StudentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liyan/service/UserloginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liyan/service/UserloginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/addCourse.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/addStudent.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/addStudent.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/addTeacher.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/editCourse.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/editStudent.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/editStudent.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/editTeacher.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/menu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/menu.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/passwordRest.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/passwordRest.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/showCourse.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/showStudent.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/showStudent.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/showTeacher.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/userPasswordRest.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/userPasswordRest.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/menu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/menu.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/overCourse.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/overCourse.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/passwordRest.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/passwordRest.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/selectCourse.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/selectCourse.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/showCourse.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/student/showCourse.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/teacher/mark.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/teacher/menu.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/teacher/passwordRest.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/teacher/showCourse.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/teacher/showGrade.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/teacher/top.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -62,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/liyan/controller/AdminController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="87" column="38" selection-start-line="87" selection-start-column="38" selection-end-line="87" selection-end-column="38" />
+            <state relative-caret-position="280">
+              <caret line="86" column="66" selection-start-line="86" selection-start-column="57" selection-end-line="86" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -624,7 +587,7 @@
       <workItem from="1568767206638" duration="18509000" />
       <workItem from="1568799969579" duration="387000" />
       <workItem from="1568858429587" duration="4692000" />
-      <workItem from="1569202756474" duration="11419000" />
+      <workItem from="1569202756474" duration="11683000" />
     </task>
     <task id="LOCAL-00001" summary="1.1">
       <created>1568800293237</created>
@@ -633,7 +596,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568800293237</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1.2">
+      <created>1569231666052</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1569231666052</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -669,7 +639,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62677000" />
+    <option name="totallyTimeSpent" value="62941000" />
   </component>
   <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
@@ -682,7 +652,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Capture Tool" order="1" />
@@ -690,7 +659,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info id="Designer" order="5" />
-      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.2332905" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.2332905" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Application Servers" order="0" weight="0.32974428" />
       <window_info anchor="bottom" id="Terminal" order="1" />
@@ -704,7 +673,7 @@
       <window_info anchor="bottom" id="Spring" order="9" weight="0.17520216" />
       <window_info anchor="bottom" id="Message" order="10" />
       <window_info anchor="bottom" id="Find" order="11" weight="0.43607" />
-      <window_info active="true" anchor="bottom" id="Run" order="12" visible="true" weight="0.58760107" />
+      <window_info anchor="bottom" id="Run" order="12" visible="true" weight="0.06603774" />
       <window_info anchor="bottom" id="Debug" order="13" weight="0.33827493" />
       <window_info anchor="bottom" id="Cvs" order="14" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="15" weight="0.4" />
@@ -725,7 +694,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.1" />
+    <MESSAGE value="1.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.2" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/admin/showTeacher.jsp">
@@ -1082,8 +1052,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/liyan/controller/AdminController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="87" column="38" selection-start-line="87" selection-start-column="38" selection-end-line="87" selection-end-column="38" />
+        <state relative-caret-position="280">
+          <caret line="86" column="66" selection-start-line="86" selection-start-column="57" selection-end-line="86" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
