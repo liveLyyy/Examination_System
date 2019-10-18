@@ -1,5 +1,6 @@
 package com.liyan.service.Impl;
 
+import com.liyan.custom.SelectedCourseCustom;
 import com.liyan.custom.StudentCustom;
 
 import com.liyan.mapper.CollegeMapper;
@@ -24,7 +25,7 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     //使用spring 自动注入
-   // @Resource(description = "studentMapperCustom")
+    // @Resource(description = "studentMapperCustom")
     @Autowired
     private StudentMapperCustom studentMapperCustom;
 
@@ -44,13 +45,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public int getCountStudent() throws Exception {
-        Student student=new Student();
+        Student student = new Student();
         return studentMapper.countBy(student);
     }
 
     @Override
     public List<StudentCustom> findByName(String name) throws Exception {
-        List<Student> list=studentMapper.selectByExample(name);
+        List<Student> list = studentMapper.selectByExample(name);
         List<StudentCustom> studentCustomList = null;
         if (list != null) {
             studentCustomList = new ArrayList<StudentCustom>();
@@ -75,6 +76,34 @@ public class StudentServiceImpl implements StudentService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void removeById(Integer id) throws Exception {
+        studentMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Student findById(Integer id) throws Exception {
+        return studentMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void updataById(Integer id, Student student) throws Exception {
+        studentMapper.updateByPrimaryKey(student);
+    }
+
+    @Override
+    public Student findStudentAndSelectCourseListByName(String name) throws Exception {
+        StudentCustom studentCustom = studentMapperCustom.findStudentAndSelectCourseListById(Integer.parseInt(name));
+        List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
+        // 判断该课程是否修完
+        for (SelectedCourseCustom s : list) {
+            if (s.getMark() != null) {
+                s.setOver(true);
+            }
+        }
+        return studentCustom;
     }
 
 

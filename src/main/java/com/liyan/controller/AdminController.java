@@ -2,12 +2,10 @@ package com.liyan.controller;
 
 import com.liyan.converter.CustomDateConverter;
 import com.liyan.custom.StudentCustom;
-import com.liyan.pojo.College;
-import com.liyan.pojo.Student;
-import com.liyan.pojo.Userlogin;
-import com.liyan.service.CollegeService;
-import com.liyan.service.StudentService;
-import com.liyan.service.UserloginService;
+import com.liyan.custom.TeacherCustom;
+import com.liyan.exception.CustomException;
+import com.liyan.pojo.*;
+import com.liyan.service.*;
 import com.liyan.vo.PagingVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
@@ -30,17 +28,17 @@ public class AdminController {
     @Resource(name = "studentServiceImpl")
     private StudentService studentService;
 
-//    @Resource(name = "teacherServiceImpl")
-//    private TeacherService teacherService;
-//
-//    @Resource(name = "courseServiceImpl")
-//    private CourseService courseService;
-//
+    @Resource(name = "courseServiceImpl")
+    private CourseService courseService;
+
     @Resource(name = "collegeServiceImpl")
     private CollegeService collegeService;
 
     @Resource(name = "userloginServiceImpl")
     private UserloginService userloginService;
+
+    @Resource(name = "teacherServiceImpl")
+    private TeacherService teacherService;
 
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<学生操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
@@ -101,49 +99,53 @@ public class AdminController {
         return "redirect:/admin/showStudent";
     }
 
-//    // 修改学生信息页面显示
-//    @RequestMapping(value = "/editStudent", method = {RequestMethod.GET})
-//    public String editStudentUI(Integer id, Model model) throws Exception {
-//        if (id == null) {
-//            //加入没有带学生id就进来的话就返回学生显示页面
-//            return "redirect:/admin/showStudent";
-//        }
-//        StudentCustom studentCustom = studentService.findById(id);
-//        if (studentCustom == null) {
-//            throw new CustomException("未找到该名学生");
-//        }
-//        List<College> list = collegeService.finAll();
-//
-//        model.addAttribute("collegeList", list);
-//        model.addAttribute("student", studentCustom);
-//
-//
-//        return "admin/editStudent";
-//    }
-//
-//    // 修改学生信息处理
-//    @RequestMapping(value = "/editStudent", method = {RequestMethod.POST})
-//    public String editStudent(StudentCustom studentCustom) throws Exception {
-//
-//        studentService.updataById(studentCustom.getUserid(), studentCustom);
-//
-//        //重定向
-//        return "redirect:/admin/showStudent";
-//    }
-//
-//    // 删除学生
-//    @RequestMapping(value = "/removeStudent", method = {RequestMethod.GET} )
-//    private String removeStudent(Integer id) throws Exception {
-//        if (id == null) {
-//            //加入没有带学生id就进来的话就返回学生显示页面
-//            return "admin/showStudent";
-//        }
-//        studentService.removeById(id);
-//        userloginService.removeByName(id.toString());
-//
-//        return "redirect:/admin/showStudent";
-//    }
-//
+    // 修改学生信息页面显示
+    @RequestMapping(value = "/editStudent", method = {RequestMethod.GET})
+    public String editStudentUI(Integer id, Model model) throws Exception {
+        if (id == null) {
+            //加入没有带学生id就进来的话就返回学生显示页面
+            return "redirect:/admin/showStudent";
+        }
+            Student student = studentService.findById(id);
+        if (student == null) {
+            throw new CustomException("未找到该名学生");
+        }
+        List<College> list = collegeService.finAll();
+        model.addAttribute("collegeList", list);
+        model.addAttribute("student", student);
+        return "admin/editStudent";
+    }
+
+    // 修改学生信息处理
+    @RequestMapping(value = "/editStudent", method = {RequestMethod.POST})
+    public String editStudent(@Param("userid") Integer userid, @Param("username") String username,
+                              @Param("sex") String sex, @Param("birthyear") String birthyear,@Param("grade") String grade
+            ,@Param("collegeid") Integer collegeid) throws Exception {
+        Student student=new Student();
+        student.setUsername(username);
+        student.setUserid(userid);
+        student.setSex(sex);
+        CustomDateConverter customDateConverter=new CustomDateConverter();
+        student.setGrade(customDateConverter.convert(grade));
+        student.setBirthyear(customDateConverter.convert(birthyear));
+        student.setCollegeid(collegeid);
+        studentService.updataById(student.getUserid(), student);
+        //重定向
+        return "redirect:/admin/showStudent";
+    }
+
+    // 删除学生
+    @RequestMapping(value = "/removeStudent", method = {RequestMethod.GET} )
+    private String removeStudent(Integer id) throws Exception {
+        if (id == null) {
+            //加入没有带学生id就进来的话就返回学生显示页面
+            return "admin/showStudent";
+        }
+        studentService.removeById(id);
+        userloginService.removeByName(id.toString());
+        return "redirect:/admin/showStudent";
+    }
+
     // 搜索学生
     @RequestMapping(value = "selectStudent", method = {RequestMethod.POST})
     private String selectStudent(String findByName, Model model) throws Exception {
@@ -152,82 +154,90 @@ public class AdminController {
         return "admin/showStudent";
     }
 
-//
-//    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<课程操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-//
-//    // 课程信息显示
-//    @RequestMapping("/showCourse")
-//    public String showCourse(Model model, Integer page) throws Exception {
-//
-//        List<CourseCustom> list = null;
-//        //页码对象
-//        PagingVO pagingVO = new PagingVO();
-//        //设置总页数
-//        pagingVO.setTotalCount(courseService.getCountCouse());
-//        if (page == null || page == 0) {
-//            pagingVO.setToPageNo(1);
-//            list = courseService.findByPaging(1);
-//        } else {
-//            pagingVO.setToPageNo(page);
-//            list = courseService.findByPaging(page);
-//        }
-//
-//        model.addAttribute("courseList", list);
-//        model.addAttribute("pagingVO", pagingVO);
-//
-//        return "admin/showCourse";
-//
-//    }
-//
-//    //添加课程
-//    @RequestMapping(value = "/addCourse", method = {RequestMethod.GET})
-//    public String addCourseUI(Model model) throws Exception {
-//
-//        List<TeacherCustom> list = teacherService.findAll();
-//        List<College> collegeList = collegeService.finAll();
-//
-//        model.addAttribute("collegeList", collegeList);
-//        model.addAttribute("teacherList", list);
-//
-//        return "admin/addCourse";
-//    }
-//
-//    // 添加课程信息处理
-//    @RequestMapping(value = "/addCourse", method = {RequestMethod.POST})
-//    public String addCourse(CourseCustom courseCustom, Model model) throws Exception {
-//
-//        Boolean result = courseService.save(courseCustom);
-//
-//        if (!result) {
-//            model.addAttribute("message", "课程号重复");
-//            return "error";
-//        }
-//
-//
-//        //重定向
-//        return "redirect:/admin/showCourse";
-//    }
-//    // 删除课程信息
-//    @RequestMapping("/removeCourse")
-//    public String removeCourse(Integer id) throws Exception {
-//        if (id == null) {
-//            //加入没有带教师id就进来的话就返回教师显示页面
-//            return "admin/showCourse";
-//        }
-//        courseService.removeById(id);
-//
-//        return "redirect:/admin/showCourse";
-//    }
-//
-//    //搜索课程
-//    @RequestMapping(value = "selectCourse", method = {RequestMethod.POST})
-//    private String selectCourse(String findByName, Model model) throws Exception {
-//
-//        List<CourseCustom> list = courseService.findByName(findByName);
-//
-//        model.addAttribute("courseList", list);
-//        return "admin/showCourse";
-//    }
+    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<课程操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+    // 课程信息显示
+    @RequestMapping("/showCourse")
+    public String showCourse(Model model, Integer page) throws Exception {
+
+        List<Course> list = null;
+        //页码对象
+        PagingVO pagingVO = new PagingVO();
+        //设置总页数
+        pagingVO.setTotalCount(courseService.getCountCouse());
+        if (page == null || page == 0) {
+            pagingVO.setToPageNo(1);
+            list = courseService.findByPaging(1);
+        } else {
+            pagingVO.setToPageNo(page);
+            list = courseService.findByPaging(page);
+        }
+        model.addAttribute("courseList", list);
+        model.addAttribute("pagingVO", pagingVO);
+        return "admin/showCourse";
+    }
+
+    //添加课程
+    @RequestMapping(value = "/addCourse", method = RequestMethod.GET)
+    public String addCourseUI(Model model) throws Exception {
+        List<Teacher> list = teacherService.findAll();
+        List<College> collegeList = collegeService.finAll();
+        model.addAttribute("collegeList", collegeList);
+        model.addAttribute("teacherList", list);
+        return "admin/addCourse";
+    }
+    // 添加课程信息处理
+    @RequestMapping(value = "/addCourse", method = RequestMethod.POST)
+    public String addCourse( Model model,@Param("courseid") Integer courseid,@Param("coursename")String coursename,
+                             @Param("teacherid")Integer teacherid,@Param("coursetime")String coursetime,@Param("classroom")String classroom
+    ,@Param("courseweek")Integer courseweek,@Param("coursetype")String coursetype,@Param("collegeid")Integer collegeid,@Param("score")Integer score) throws Exception {
+        Course course=new Course();
+        course.setCourseid(courseid);
+        course.setCoursename(coursename);
+
+        course.setTeacherid(teacherid);
+
+
+        course.setCoursetime(coursetime);
+        course.setClassroom(classroom);
+        course.setCourseweek(courseweek);
+        course.setCoursetype(coursetype);
+
+        course.setCollegeid(collegeid);
+
+
+        course.setScore(score);
+        Boolean result = courseService.save(course);
+        if (!result) {
+            model.addAttribute("message", "课程号重复");
+            return "error";
+        }
+        //重定向
+        return "redirect:/admin/showCourse";
+    }
+
+
+    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<教师操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+    @RequestMapping("/showTeacher")
+    public String showTeacher(Model model, Integer page) throws Exception {
+        List<Teacher> list = null;
+        //页码对象
+        PagingVO pagingVO = new PagingVO();
+        //设置总页数
+        pagingVO.setTotalCount(teacherService.getCountTeacher());
+        if (page == null || page == 0) {
+            pagingVO.setToPageNo(1);
+            list = teacherService.findByPaging(1);
+        } else {
+            pagingVO.setToPageNo(page);
+            list = teacherService.findByPaging(page);
+        }
+        model.addAttribute("teacherList", list);
+        model.addAttribute("pagingVO", pagingVO);
+        return "admin/showTeacher";
+    }
+
 //
 //    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<其他操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 //

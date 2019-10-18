@@ -34,4 +34,19 @@
         values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},#{birthyear,jdbcType=DATE}, #{grade,jdbcType=DATE}, #{collegeid,jdbcType=INTEGER} )
   </insert>
 
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+         delete from student
+         where userID = #{userid,jdbcType=INTEGER}
+  </delete>
+
+    <update id="updateByPrimaryKey" parameterType="Student" >
+    update student
+    set userName = #{username,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthYear = #{birthyear,jdbcType=DATE},
+      grade = #{grade,jdbcType=DATE},
+      collegeID = #{collegeid,jdbcType=INTEGER}
+    where userID = #{userid,jdbcType=INTEGER}
+  </update>
+
 </mapper>

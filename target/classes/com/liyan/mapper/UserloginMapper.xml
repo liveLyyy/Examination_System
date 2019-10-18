@@ -16,9 +16,14 @@
     </select>
 
     <insert id="insert" parameterType="Userlogin">
-    insert into userlogin (userID, userName, password,role)
-    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER})
+         insert into userlogin (userID, userName, password,role)
+         values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER})
   </insert>
+
+    <delete id="deleteByExample" parameterType="Userlogin" >
+        delete from userlogin
+        where userName=#{username}
+    </delete>
 
 
 </mapper>

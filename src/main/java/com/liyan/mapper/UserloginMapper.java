@@ -10,4 +10,9 @@ public interface UserloginMapper {
 
    //新增
    int insert(Userlogin userlogin);
+
+    //根据姓名删除
+    void removeByName(String name) throws Exception;
+
+    int deleteByExample(String UserName);
 }

@@ -7,4 +7,29 @@
     <result column="mark" property="mark" jdbcType="INTEGER" />
   </resultMap>
 
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Selectedcourse" >
+    select *
+    from selectedcourse
+  </select>
+
+  <insert id="insert" parameterType="Selectedcourse" >
+    insert into selectedcourse (courseID, studentID, mark)
+    values (#{courseid,jdbcType=INTEGER}, #{studentid,jdbcType=INTEGER}, #{mark,jdbcType=INTEGER} )
+  </insert>
+
+  <delete id="deleteByExample" parameterType="Selectedcourse" >
+    delete selectedcourse
+    <set >
+      <if test="courseid != null" >
+        courseID = #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="studentid != null" >
+        studentID = #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=INTEGER},
+      </if>
+    </set>
+  </delete>
+
 </mapper>

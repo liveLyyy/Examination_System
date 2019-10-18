@@ -20,4 +20,9 @@ public class UserloginServiceImpl implements UserloginService {
     public void save(Userlogin userlogin) throws Exception {
         userloginMapper.insert(userlogin);
     }
+
+    @Override
+    public void removeByName(String name) throws Exception {
+        userloginMapper.deleteByExample(name);
+    }
 }

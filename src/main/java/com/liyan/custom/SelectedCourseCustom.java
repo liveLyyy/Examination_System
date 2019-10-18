@@ -1,6 +1,7 @@
 package com.liyan.custom;
 
 import com.liyan.pojo.Selectedcourse;
+import com.liyan.pojo.Student;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 public class SelectedCourseCustom extends Selectedcourse {
     //新增Student 对象字段
-    private StudentCustom studentCustom;
+    private Student studentCustom;
 
     //扩展课程信息对象
     private CourseCustom courseCustom;
@@ -26,11 +27,11 @@ public class SelectedCourseCustom extends Selectedcourse {
         this.over = over;
     }
 
-    public StudentCustom getStudentCustom() {
+    public Student getStudentCustom() {
         return studentCustom;
     }
 
-    public void setStudentCustom(StudentCustom studentCustom) {
+    public void setStudentCustom(Student studentCustom) {
         this.studentCustom = studentCustom;
     }
 

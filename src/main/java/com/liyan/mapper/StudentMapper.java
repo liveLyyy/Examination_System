@@ -15,4 +15,9 @@ public interface StudentMapper {
    Student selectByPrimaryKey(Integer userid);
 
    int insert(Student student);
+
+   int deleteByPrimaryKey(Integer userid);
+
+   int updateByPrimaryKey(Student student);
+
 }
