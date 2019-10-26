@@ -17,4 +17,12 @@ public interface TeacherService {
     int getCountTeacher() throws Exception;
     //获取分页查询老师信息
     List<Teacher> findByPaging(Integer toPageNo) throws Exception;
+    //根据id查询
+    TeacherCustom findById(Integer id) throws Exception;
+    //根据id更新老师信息
+    void updateById(Integer id, Teacher teacher) throws Exception;
+    //根据id删除老师信息
+    void removeById(Integer id) throws Exception;
+    //根据名字查询
+    List<TeacherCustom> findByName(String name) throws Exception;
 }

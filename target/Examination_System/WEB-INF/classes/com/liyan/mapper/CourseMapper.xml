@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liyan.mapper.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.liyan.pojo.Course" >
+    <id column="courseID" property="courseid" jdbcType="INTEGER" />
+    <result column="courseName" property="coursename" jdbcType="VARCHAR" />
+    <result column="teacherID" property="teacherid" jdbcType="INTEGER" />
+    <result column="courseTime" property="coursetime" jdbcType="VARCHAR" />
+    <result column="classRoom" property="classroom" jdbcType="VARCHAR" />
+    <result column="courseWeek" property="courseweek" jdbcType="INTEGER" />
+    <result column="courseType" property="coursetype" jdbcType="VARCHAR" />
+    <result column="collegeID" property="collegeid" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="countByExample" parameterType="Course" resultType="java.lang.Integer" >
+    select count(*) from course
+  </select>
+
+  <select id="findByPaging" parameterType="com.liyan.vo.PagingVO" resultType="Course">
+        select course.*, college.collegeName
+        from course, college
+        WHERE course.collegeID = college.collegeID
+        limit #{toPageNo}, #{pageSize}
+    </select>
+
+    <insert id="insert" parameterType="com.liyan.pojo.Course" >
+    insert into course (courseID, courseName, teacherID,
+      courseTime, classRoom, courseWeek,
+      courseType, collegeID, score
+      )
+    values (#{courseid,jdbcType=INTEGER}, #{coursename,jdbcType=VARCHAR}, #{teacherid,jdbcType=INTEGER},
+      #{coursetime,jdbcType=VARCHAR}, #{classroom,jdbcType=VARCHAR}, #{courseweek,jdbcType=INTEGER},
+      #{coursetype,jdbcType=VARCHAR}, #{collegeid,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Course" >
+    select *
+    from course
+  </select>
+</mapper>

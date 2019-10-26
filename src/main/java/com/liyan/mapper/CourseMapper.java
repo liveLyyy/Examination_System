@@ -16,4 +16,6 @@ public interface CourseMapper {
 
     int insert(Course course);
 
+    List<Course> selectByExample(Course course);
+
 }

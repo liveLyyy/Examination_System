@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -237,7 +238,107 @@ public class AdminController {
         model.addAttribute("pagingVO", pagingVO);
         return "admin/showTeacher";
     }
+    // 添加教师信息
+    @RequestMapping(value = "/addTeacher", method = {RequestMethod.GET})
+    public String addTeacherUI(Model model) throws Exception {
+        List<College> list = collegeService.finAll();
+        model.addAttribute("collegeList", list);
+        return "admin/addTeacher";
+    }
+    // 添加教师信息处理
+    @RequestMapping(value = "/addTeacher", method = {RequestMethod.POST})
+    public String addTeacher(@Param("userid") Integer userid,@Param("username")String username,
+                             @Param("sex") String sex,@Param("birthyear") String birthyear,@Param("degree")String degree,
+                             @Param("title")String title,@Param("grade") String grade,@Param("collegeid") Integer collegeid,Model model) throws Exception {
+        Teacher teacher=new Teacher();
+        teacher.setUserid(userid);
+        teacher.setUsername(username);
+        teacher.setSex(sex);
 
+        CustomDateConverter converter=new CustomDateConverter();
+        teacher.setBirthyear(converter.convert(birthyear));
+
+        teacher.setDegree(degree);
+        teacher.setTitle(title);
+
+        teacher.setGrade(converter.convert(grade));
+
+        teacher.setCollegeid(collegeid);
+
+        Boolean result = teacherService.save(teacher);
+        if (!result) {
+            model.addAttribute("message", "工号重复");
+            return "error";
+        }
+        //添加成功后，也添加到登录表
+        Userlogin userlogin = new Userlogin();
+        userlogin.setUsername(teacher.getUserid().toString());
+        userlogin.setPassword("123");
+        userlogin.setRole(1);
+        userloginService.save(userlogin);
+        //重定向
+        return "redirect:/admin/showTeacher";
+    }
+
+    // 修改教师信息页面显示
+    @RequestMapping(value = "/editTeacher", method = {RequestMethod.GET})
+    public String editTeacherUI(Integer id, Model model) throws Exception {
+        if (id == null) {
+            return "redirect:/admin/showTeacher";
+        }
+        TeacherCustom teacherCustom = teacherService.findById(id);
+        if (teacherCustom == null) {
+            throw new CustomException("未找到该名学生");
+        }
+        List<College> list = collegeService.finAll();
+        model.addAttribute("collegeList", list);
+        model.addAttribute("teacher", teacherCustom);
+        return "admin/editTeacher";
+    }
+
+    // 修改教师信息页面处理
+    @RequestMapping(value = "/editTeacher", method = {RequestMethod.POST})
+    public String editTeacher(@Param("userid") Integer userid,@Param("username")String username,
+                              @Param("sex") String sex,@Param("birthyear") String birthyear,@Param("degree")String degree,
+                              @Param("title")String title,@Param("grade") String grade,@Param("collegeid") Integer collegeid) throws Exception {
+        Teacher teacher=new Teacher();
+        teacher.setUserid(userid);
+        teacher.setUsername(username);
+        teacher.setSex(sex);
+
+        CustomDateConverter converter=new CustomDateConverter();
+        teacher.setBirthyear(converter.convert(birthyear));
+
+        teacher.setDegree(degree);
+        teacher.setTitle(title);
+
+        teacher.setGrade(converter.convert(grade));
+
+        teacher.setCollegeid(collegeid);
+
+        teacherService.updateById(teacher.getUserid(), teacher);
+        //重定向
+        return "redirect:/admin/showTeacher";
+    }
+    //删除教师
+    @RequestMapping("/removeTeacher")
+    public String removeTeacher(Integer id) throws Exception {
+        if (id == null) {
+            //加入没有带教师id就进来的话就返回教师显示页面
+            return "admin/showTeacher";
+        }
+        teacherService.removeById(id);
+        userloginService.removeByName(id.toString());
+
+        return "redirect:/admin/showTeacher";
+    }
+    //搜索教师
+    @RequestMapping(value = "selectTeacher", method = {RequestMethod.POST})
+    private String selectTeacher(String findByName, Model model) throws Exception {
+        List<TeacherCustom> list = teacherService.findByName(findByName);
+        model.addAttribute("teacherList", list);
+        return "admin/showTeacher";
+    }
 //
 //    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<其他操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 //

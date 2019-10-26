@@ -27,7 +27,7 @@
     select count(*) from teacher
   </select>
 
-  <select id="findByPaging" parameterType="com.liyan.vo.PagingVO" resultType="com.liyan.pojo.Teacher">
+  <select id="findByPaging" parameterType="com.liyan.vo.PagingVO" resultType="com.liyan.custom.TeacherCustom">
         select teacher.*, college.collegeName
         from teacher, college
         WHERE teacher.collegeID = college.collegeID
@@ -42,4 +42,16 @@
       #{birthyear,jdbcType=DATE}, #{degree,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
       #{grade,jdbcType=DATE}, #{collegeid,jdbcType=INTEGER})
   </insert>
+
+  <update id="updateByPrimaryKey" parameterType="Teacher" >
+    update teacher
+    set userName = #{username,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthYear = #{birthyear,jdbcType=DATE},
+      degree = #{degree,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=DATE},
+      collegeID = #{collegeid,jdbcType=INTEGER}
+    where userID = #{userid,jdbcType=INTEGER}
+  </update>
 </mapper>

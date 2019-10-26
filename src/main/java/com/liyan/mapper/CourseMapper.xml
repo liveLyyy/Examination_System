@@ -34,4 +34,9 @@
       #{coursetype,jdbcType=VARCHAR}, #{collegeid,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}
       )
   </insert>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Course" >
+    select *
+    from course
+  </select>
 </mapper>

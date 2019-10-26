@@ -18,4 +18,8 @@ public interface TeacherMapper {
 
     //分页查询老师信息
     List<Teacher> findByPaging(PagingVO pagingVO) throws Exception;
+
+    int updateByPrimaryKey(Teacher teacher);
+
+    int deleteByPrimaryKey(Integer userid);
 }
