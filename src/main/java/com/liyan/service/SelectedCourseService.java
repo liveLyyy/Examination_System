@@ -19,4 +19,6 @@ public interface SelectedCourseService {
     //退课
     void remove(Selectedcourse selectedCourseCustom) throws Exception;
 
+    List<Selectedcourse> findAll() throws  Exception;
+
 }

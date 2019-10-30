@@ -1,6 +1,7 @@
 package com.liyan.controller;
 
 import com.liyan.converter.CustomDateConverter;
+import com.liyan.custom.CourseCustom;
 import com.liyan.custom.StudentCustom;
 import com.liyan.custom.TeacherCustom;
 import com.liyan.exception.CustomException;
@@ -195,18 +196,12 @@ public class AdminController {
         Course course=new Course();
         course.setCourseid(courseid);
         course.setCoursename(coursename);
-
         course.setTeacherid(teacherid);
-
-
         course.setCoursetime(coursetime);
         course.setClassroom(classroom);
         course.setCourseweek(courseweek);
         course.setCoursetype(coursetype);
-
         course.setCollegeid(collegeid);
-
-
         course.setScore(score);
         Boolean result = courseService.save(course);
         if (!result) {
@@ -216,7 +211,59 @@ public class AdminController {
         //重定向
         return "redirect:/admin/showCourse";
     }
-
+    // 修改课程信息页面显示
+    @RequestMapping(value = "/editCourse", method = {RequestMethod.GET})
+    public String editCourseUI(Integer id, Model model) throws Exception {
+        if (id == null) {
+            return "redirect:/admin/showCourse";
+        }
+        CourseCustom courseCustom = courseService.findById(id);
+        if (courseCustom == null) {
+            throw new CustomException("未找到该课程");
+        }
+        List<Teacher> list = teacherService.findAll();
+        List<College> collegeList = collegeService.finAll();
+        model.addAttribute("teacherList", list);
+        model.addAttribute("collegeList", collegeList);
+        model.addAttribute("course", courseCustom);
+        return "admin/editCourse";
+    }
+    // 修改课程信息页面处理
+    @RequestMapping(value = "/editCourse", method = {RequestMethod.POST})
+    public String editCourse(@Param("courseid")Integer courseid,@Param("coursename")String coursename,@Param("teacherid")Integer teacherid,
+                             @Param("coursetime")String coursetime,@Param("classroom") String classroom,@Param("courseweek")Integer courseweek,
+                             @Param("coursetype")String coursetype,@Param("collegeid") Integer collegeid,@Param("score")Integer score) throws Exception {
+        Course course=new Course();
+        course.setCourseid(courseid);
+        course.setCoursename(coursename);
+        course.setTeacherid(teacherid);
+        course.setCoursetime(coursetime);
+        course.setClassroom(classroom);
+        course.setCourseweek(courseweek);
+        course.setCoursetype(coursetype);
+        course.setCollegeid(collegeid);
+        course.setScore(score);
+        courseService.upadteById(course.getCourseid(),course );
+        //重定向
+        return "redirect:/admin/showCourse";
+    }
+    // 删除课程信息
+    @RequestMapping("/removeCourse")
+    public String removeCourse(Integer id) throws Exception {
+        if (id == null) {
+            //加入没有带教师id就进来的话就返回教师显示页面
+            return "admin/showCourse";
+        }
+        courseService.removeById(id);
+        return "redirect:/admin/showCourse";
+    }
+    //搜索课程
+    @RequestMapping(value = "selectCourse", method = {RequestMethod.POST})
+    private String selectCourse(String findByName, Model model) throws Exception {
+        List<CourseCustom> list = courseService.findByName(findByName);
+        model.addAttribute("courseList", list);
+        return "admin/showCourse";
+    }
 
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<教师操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 
@@ -329,7 +376,6 @@ public class AdminController {
         }
         teacherService.removeById(id);
         userloginService.removeByName(id.toString());
-
         return "redirect:/admin/showTeacher";
     }
     //搜索教师
@@ -339,33 +385,30 @@ public class AdminController {
         model.addAttribute("teacherList", list);
         return "admin/showTeacher";
     }
-//
-//    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<其他操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-//
-//    // 普通用户账号密码重置
-//    @RequestMapping("/userPasswordRest")
-//    public String userPasswordRestUI() throws Exception {
-//        return "admin/userPasswordRest";
-//    }
-//
-//    // 普通用户账号密码重置处理
-//    @RequestMapping(value = "/userPasswordRest", method = {RequestMethod.POST})
-//    public String userPasswordRest(Userlogin userlogin) throws Exception {
-//
-//        Userlogin u = userloginService.findByName(userlogin.getUsername());
-//
-//        if (u != null) {
-//            if (u.getRole() == 0) {
-//                throw new CustomException("该账户为管理员账户，没法修改");
-//            }
-//            u.setPassword(userlogin.getPassword());
-//            userloginService.updateByName(userlogin.getUsername(), u);
-//        } else {
-//            throw new CustomException("没找到该用户");
-//        }
-//
-//        return "admin/userPasswordRest";
-//    }
+
+    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<其他操作>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+
+    // 普通用户账号密码重置
+    @RequestMapping("/userPasswordRest")
+    public String userPasswordRestUI() throws Exception {
+        return "admin/userPasswordRest";
+    }
+
+    // 普通用户账号密码重置处理
+    @RequestMapping(value = "/userPasswordRest", method = {RequestMethod.POST})
+    public String userPasswordRest(Userlogin userlogin) throws Exception {
+        Userlogin u = userloginService.findByName(userlogin.getUsername());
+        if (u != null) {
+            if (u.getRole() == 0) {
+                throw new CustomException("该账户为管理员账户，没法修改");
+            }
+            u.setPassword(userlogin.getPassword());
+            userloginService.updateByName(userlogin.getUsername(), u);
+        } else {
+            throw new CustomException("没找到该用户");
+        }
+        return "admin/userPasswordRest";
+    }
 
     // 本账户密码重置
     @RequestMapping("/passwordRest")

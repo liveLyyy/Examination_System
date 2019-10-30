@@ -35,7 +35,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> findAll() throws Exception {
         Teacher teacher=new Teacher();
-        List<Teacher> list=teacherMapper.selectByExample(teacher);
+        List<Teacher> list=teacherMapper.selectByExample1s(teacher);
         List<Teacher> teacherCustomsList = null;
         if (list != null) {
             teacherCustomsList = new ArrayList<Teacher>();
@@ -100,8 +100,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<TeacherCustom> findByName(String name) throws Exception {
-        Teacher teacher = new Teacher();
-        List<Teacher> list = teacherMapper.selectByExample(teacher);
+        List<Teacher> list = teacherMapper.selectByExample(name);
         List<TeacherCustom> teacherCustomList = null;
         if (list != null) {
             teacherCustomList = new ArrayList<TeacherCustom>();

@@ -68,8 +68,10 @@
 									<td>${item.coursetype}</td>
 									<td>${item.score}</td>
 									<td>
-										<button class="btn btn-default btn-xs btn-info" onClick="location.href='${pageContext.request.contextPath}/admin/editCourse?id=${item.courseid}'">修改</button>
-										<button class="btn btn-default btn-xs btn-danger btn-primary" onClick="location.href='${pageContext.request.contextPath}/admin/removeCourse?id=${item.courseid}'">删除</button>
+										<button class="btn btn-default btn-xs btn-info"
+												onClick="location.href='${pageContext.request.contextPath}/admin/editCourse?id=${item.courseid}'">修改</button>
+										<button class="btn btn-default btn-xs btn-danger btn-primary"
+												onClick="location.href='${pageContext.request.contextPath}/admin/removeCourse?id=${item.courseid}'">删除</button>
 										<!--弹出框-->
 									</td>
 								</tr>

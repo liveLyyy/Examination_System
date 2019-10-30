@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface TeacherMapper {
 
-    List<Teacher> selectByExample(Teacher teacher);
+    List<Teacher> selectByExample(String name);
+
+    List<Teacher> selectByExample1s(Teacher teacher);
 
     Teacher selectByPrimaryKey(Integer userid);
 

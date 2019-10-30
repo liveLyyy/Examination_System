@@ -1,7 +1,10 @@
 package com.liyan.mapper;
 
 import com.liyan.pojo.Userlogin;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserloginMapper {
@@ -15,4 +18,8 @@ public interface UserloginMapper {
     void removeByName(String name) throws Exception;
 
     int deleteByExample(String UserName);
+
+    List<Userlogin> selectByExample(String username);
+
+    int updateByExample(Userlogin userlogin,String username);
 }

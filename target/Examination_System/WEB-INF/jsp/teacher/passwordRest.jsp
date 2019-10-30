@@ -15,7 +15,7 @@
 	<!-- 顶栏 -->
 	<jsp:include page="top.jsp"></jsp:include>
 	<!-- 中间主体 -->
-	<div class="container" id="content">
+	<div class="container-fluid" id="content">
 		<div class="row">
 			<jsp:include page="menu.jsp"></jsp:include>
 			<div class="col-md-10">
@@ -57,7 +57,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container" id="footer">
+	<div class="container-fluid" id="footer">
 	<div class="row">
 		<div class="col-md-12"></div>
 	</div>

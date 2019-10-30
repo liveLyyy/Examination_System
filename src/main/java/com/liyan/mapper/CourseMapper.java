@@ -18,4 +18,10 @@ public interface CourseMapper {
 
     List<Course> selectByExample(Course course);
 
+    List<Course> selectByExamples(String usrename);
+
+    int updateByPrimaryKey(Course course);
+
+    int deleteByPrimaryKey(Integer courseid);
+
 }

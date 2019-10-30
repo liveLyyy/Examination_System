@@ -19,6 +19,21 @@ public class Course {
 
     private Integer score;
 
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseid=" + courseid +
+                ", coursename='" + coursename + '\'' +
+                ", teacherid=" + teacherid +
+                ", coursetime='" + coursetime + '\'' +
+                ", classroom='" + classroom + '\'' +
+                ", courseweek=" + courseweek +
+                ", coursetype='" + coursetype + '\'' +
+                ", collegeid=" + collegeid +
+                ", score=" + score +
+                '}';
+    }
+
     public Integer getCourseid() {
         return courseid;
     }
@@ -32,7 +47,7 @@ public class Course {
     }
 
     public void setCoursename(String coursename) {
-        this.coursename = coursename == null ? null : coursename.trim();
+        this.coursename = coursename;
     }
 
     public Integer getTeacherid() {
@@ -48,7 +63,7 @@ public class Course {
     }
 
     public void setCoursetime(String coursetime) {
-        this.coursetime = coursetime == null ? null : coursetime.trim();
+        this.coursetime = coursetime;
     }
 
     public String getClassroom() {
@@ -56,7 +71,7 @@ public class Course {
     }
 
     public void setClassroom(String classroom) {
-        this.classroom = classroom == null ? null : classroom.trim();
+        this.classroom = classroom;
     }
 
     public Integer getCourseweek() {
@@ -72,7 +87,7 @@ public class Course {
     }
 
     public void setCoursetype(String coursetype) {
-        this.coursetype = coursetype == null ? null : coursetype.trim();
+        this.coursetype = coursetype;
     }
 
     public Integer getCollegeid() {
@@ -89,5 +104,20 @@ public class Course {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Course(Integer courseid, String coursename, Integer teacherid, String coursetime, String classroom, Integer courseweek, String coursetype, Integer collegeid, Integer score) {
+        this.courseid = courseid;
+        this.coursename = coursename;
+        this.teacherid = teacherid;
+        this.coursetime = coursetime;
+        this.classroom = classroom;
+        this.courseweek = courseweek;
+        this.coursetype = coursetype;
+        this.collegeid = collegeid;
+        this.score = score;
+    }
+
+    public Course() {
     }
 }

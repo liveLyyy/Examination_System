@@ -52,5 +52,11 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         selectedcourseMapper.deleteByExample(example);
     }
 
+    @Override
+    public List<Selectedcourse> findAll() throws Exception {
+        Selectedcourse selectedcourse=new Selectedcourse();
+        return selectedcourseMapper.selectByExample(selectedcourse);
+    }
+
 
 }

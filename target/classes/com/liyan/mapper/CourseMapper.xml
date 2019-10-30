@@ -39,4 +39,36 @@
     select *
     from course
   </select>
+
+  <select id="selectByExamples" resultMap="BaseResultMap" parameterType="Course" >
+    select *
+    from course
+    <if test="coursename != null and  coursename != ''">
+      where courseName like concat('%',#{coursename},'%')
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from course
+    where courseID = #{courseid,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="Course" >
+    update course
+    set courseName = #{coursename,jdbcType=VARCHAR},
+      teacherID = #{teacherid,jdbcType=INTEGER},
+      courseTime = #{coursetime,jdbcType=VARCHAR},
+      classRoom = #{classroom,jdbcType=VARCHAR},
+      courseWeek = #{courseweek,jdbcType=INTEGER},
+      courseType = #{coursetype,jdbcType=VARCHAR},
+      collegeID = #{collegeid,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER}
+    where courseID = #{courseid,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from course
+    where courseID = #{courseid,jdbcType=INTEGER}
+  </delete>
 </mapper>

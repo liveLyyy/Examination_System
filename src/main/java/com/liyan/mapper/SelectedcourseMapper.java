@@ -14,4 +14,6 @@ public interface SelectedcourseMapper {
     int insert(Selectedcourse selectedcourse);
 
     int deleteByExample(Selectedcourse selectedcourse);
+
+
 }

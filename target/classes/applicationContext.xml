@@ -84,6 +84,8 @@
         </tx:attributes>
     </tx:advice>
 
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
     <!--AOP-->
     <aop:config>
         <!--设置切入点-->

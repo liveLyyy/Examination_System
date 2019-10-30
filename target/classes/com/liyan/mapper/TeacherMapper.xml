@@ -12,7 +12,15 @@
     <result column="collegeID" property="collegeid" jdbcType="INTEGER" />
   </resultMap>
 
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.liyan.pojo.Teacher" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Teacher" >
+    select *
+    from teacher
+    <if test="userName != null and  userName != ''">
+      where userName like concat('%',#{username},'%')
+    </if>
+  </select>
+
+  <select id="selectByExample1s" resultMap="BaseResultMap" parameterType="Teacher" >
     select *
     from teacher
   </select>

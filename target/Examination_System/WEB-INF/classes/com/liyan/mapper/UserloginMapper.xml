@@ -25,5 +25,20 @@
         where userName=#{username}
     </delete>
 
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="Userlogin" >
+        select *
+        from userlogin
+        where userName=#{username}
+    </select>
+
+    <update id="updateByExample" parameterType="map" >
+        update userlogin
+        set userID = #{record.userid,jdbcType=INTEGER},
+        userName = #{record.username,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        role = #{record.role,jdbcType=INTEGER}
+        where userName=#{username}
+    </update>
+
 
 </mapper>
